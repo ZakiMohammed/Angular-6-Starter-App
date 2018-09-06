@@ -1,0 +1,54 @@
+<!-- Projects Rows -->
+<div *ngFor="let product of pagination.list; let last = last">
+  <div class="row">
+    <div class="col-md-7">
+      <a [routerLink]="['/product', product.id]">
+        <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+      </a>
+    </div>
+    <div class="col-md-5">
+      <h3>{{ product.title }}</h3>
+      <p>{{ product.shortContent }}</p>
+      <a class="btn btn-primary" [routerLink]="['/product', product.id]">View Project
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+    </div>
+  </div>
+  <hr>
+</div>
+<!-- /Projects Row -->
+
+<!-- Pagination -->
+<ul class="pagination justify-content-center">
+
+  <li class="page-item">
+    <button class="page-link" type="button" aria-label="Previous" (click)="pagination.first()">
+      <i class="fa fa-angle-double-left"></i>
+    </button>
+  </li>
+  <li class="page-item">
+    <button class="page-link" type="button" aria-label="Previous" (click)="pagination.previous()">
+      <i class="fa fa-angle-left"></i>
+    </button>
+  </li>
+
+  <ng-container *ngFor="let page of pagination.numbers">  
+    <li class="page-item">    
+      <button type="button" class="page-link" (click)="pagination.current(page)">
+        {{ page }}
+      </button>
+    </li>
+  </ng-container>
+
+  <li class="page-item">
+    <button class="page-link" type="button" aria-label="Next" (click)="pagination.next()">
+      <i class="fa fa-angle-right"></i>
+    </button>
+  </li>
+  <li class="page-item">
+    <button class="page-link" type="button" aria-label="Next" (click)="pagination.last()">
+      <i class="fa fa-angle-double-right"></i>      
+    </button>
+  </li>
+</ul>
+<!-- /Pagination -->

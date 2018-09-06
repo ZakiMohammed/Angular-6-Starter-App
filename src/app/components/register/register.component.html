@@ -1,0 +1,33 @@
+<div class="row mt-5 pt-5">
+  <div class="col-sm-4 offset-sm-4">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h3 class="text-center">Register to Foo</h3>
+        <hr>
+        <form role="form" #goodForm="ngForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="User Name" id="userName" name="userName" required formControlName="userName">            
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email" name="email" required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Mobile" name="mobile" required>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!goodForm.form.valid || sending">
+            Register
+          </button>
+          <control-alert [alert]="alert"></control-alert>
+          <br>
+          <div class="pt-2">
+            <a routerLink="/home">Go to Home</a>
+            <a routerLink="/login" class="pull-right">Already registered?</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

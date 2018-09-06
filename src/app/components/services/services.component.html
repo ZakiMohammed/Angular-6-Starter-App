@@ -1,0 +1,33 @@
+<!-- Image Header -->
+<img class="img-fluid rounded mb-4" src="http://placehold.it/1200x300" alt="" />
+
+<!-- Services -->
+<ng-container *ngFor="let service of services; let i = index">
+  <div class="row" *ngIf="(i * 3) < services.length">
+    <div class="col mb-4">
+        <div class="card">
+          <div class="card-body">
+              <h5 class="card-title">{{ services[(i * 3)].name }}</h5>
+              <p class="card-text">{{ services[(i * 3)].description }}</p>
+          </div>
+        </div>
+    </div>
+    <div class="col" *ngIf="((i * 3) + 1) < services.length">
+        <div class="card">
+          <div class="card-body">
+              <h5 class="card-title">{{ services[(i * 3) + 1].name }}</h5>
+              <p class="card-text">{{ services[(i * 3) + 1].description }}</p>
+          </div>
+        </div>
+    </div>
+    <div class="col" *ngIf="((i * 3) + 2) < services.length">
+        <div class="card">
+          <div class="card-body">
+              <h5 class="card-title">{{ services[(i * 3) + 2].name }}</h5>
+              <p class="card-text">{{ services[(i * 3) + 2].description }}</p>
+          </div>
+        </div>
+    </div>    
+  </div>
+</ng-container>
+<!-- /Services -->
