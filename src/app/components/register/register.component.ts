@@ -36,8 +36,12 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+<<<<<<< HEAD
     console.log(this.user)
     //return;
+=======
+    console.log(this.user)    
+>>>>>>> a2fdddb9197d7b7f6113d07a989e64e47d541110
     this.alert.progress();            
     this.userService.post(this.user).then(response => {
 
