@@ -14,26 +14,48 @@ export class ProductComponent implements OnInit {
   pagination: Pagination;
 
   constructor(private productService: ProductService, private sharedService: SharedService) {
-    this.pagination = new Pagination([], 0, 6, [], []);
     this.sharedService.showBanner(false);
     this.sharedService.showPageTop(true);
     this.sharedService.showPageTopData(new PageTop('Product', '', [
       { name: 'Home', route: '/home', title: 'Home' },
       { name: 'Product', route: '', title: 'Product' }
     ]));
+
+    this.pagination = new Pagination([], 0, 5, [], []);
+    this.pagination.nextCallBack = () => {      
+      this.getProducts(this.pagination.index, this.pagination.count);
+    };
+    this.pagination.previousCallBack = () => {
+      this.getProducts(this.pagination.index, this.pagination.count);
+    };
+    this.pagination.firstCallBack = () => {
+      this.getProducts(this.pagination.index, this.pagination.count);
+    };
+    this.pagination.lastCallBack = () => {
+      this.getProducts(this.pagination.index, this.pagination.count);
+    };
+    this.pagination.currentCallBack = () => {
+      this.getProducts(this.pagination.index, this.pagination.count);
+    };
   }
 
   ngOnInit() {
-    this.productService.getProductAll().subscribe(products => {
+    this.productService.getProducts(this.pagination.index, this.pagination.count).subscribe(dto => {
+      
+      this.pagination.list = dto.data;
+      this.pagination.totalCount = dto.totalCount;
 
-      let list = products.slice(this.pagination.index, this.pagination.count);
-      this.pagination.source = products;
-      this.pagination.list = list;
-
-      for (var i = 1; i <= Math.ceil(products.length / this.pagination.count); i++) {
+      for (var i = 1; i <= Math.ceil(dto.totalCount / this.pagination.count); i++) {
         this.pagination.numbers.push(i);
       }
     });
   }
+
+  getProducts(index:number, size:number, search:string = "", orderBy:string = "ID", orderDir:string = "DESC") {
+    this.productService.getProducts(this.pagination.index, this.pagination.count).subscribe(dto => {
+      this.pagination.list = dto.data;
+      this.pagination.totalCount = dto.totalCount;
+    });
+  }  
 
 }
