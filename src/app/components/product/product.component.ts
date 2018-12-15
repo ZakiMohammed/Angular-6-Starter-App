@@ -21,40 +21,44 @@ export class ProductComponent implements OnInit {
       { name: 'Product', route: '', title: 'Product' }
     ]));
 
-    this.pagination = new Pagination([], 0, 5, [], []);
+    this.pagination = new Pagination([], 0, 5, [], '', 'Title', 'ASC');
+    
     this.pagination.nextCallBack = () => {      
-      this.getProducts(this.pagination.index, this.pagination.count);
+      this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, this.pagination.orderBy, this.pagination.orderDir);
     };
     this.pagination.previousCallBack = () => {
-      this.getProducts(this.pagination.index, this.pagination.count);
+      this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, this.pagination.orderBy, this.pagination.orderDir);
     };
     this.pagination.firstCallBack = () => {
-      this.getProducts(this.pagination.index, this.pagination.count);
+      this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, this.pagination.orderBy, this.pagination.orderDir);
     };
     this.pagination.lastCallBack = () => {
-      this.getProducts(this.pagination.index, this.pagination.count);
+      this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, this.pagination.orderBy, this.pagination.orderDir);
     };
     this.pagination.currentCallBack = () => {
-      this.getProducts(this.pagination.index, this.pagination.count);
+      this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, this.pagination.orderBy, this.pagination.orderDir);
+    };
+    this.pagination.searchCallBack = () => {      
+      this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, this.pagination.orderBy, this.pagination.orderDir);
+    };
+    this.pagination.orderCallBack = (by) => {            
+      this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, by, this.pagination.orderDir);
     };
   }
 
   ngOnInit() {
-    this.productService.getProducts(this.pagination.index, this.pagination.count).subscribe(dto => {
-      
-      this.pagination.list = dto.data;
-      this.pagination.totalCount = dto.totalCount;
-
-      for (var i = 1; i <= Math.ceil(dto.totalCount / this.pagination.count); i++) {
-        this.pagination.numbers.push(i);
-      }
-    });
+    this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText);
   }
 
-  getProducts(index:number, size:number, search:string = "", orderBy:string = "ID", orderDir:string = "DESC") {
-    this.productService.getProducts(this.pagination.index, this.pagination.count).subscribe(dto => {
+  getProducts(index:number, size:number, search:string = "", orderBy:string = "Title", orderDir:string = "ASC") {
+    this.productService.getProducts(index, size, search, orderBy, orderDir).subscribe(dto => {
       this.pagination.list = dto.data;
       this.pagination.totalCount = dto.totalCount;
+
+      this.pagination.numbers = [];
+      for (var i = 1; i <= Math.ceil(dto.filterCount / this.pagination.count); i++) {
+        this.pagination.numbers.push(i);
+      }
     });
   }  
 

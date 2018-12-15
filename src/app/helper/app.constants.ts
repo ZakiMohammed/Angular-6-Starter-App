@@ -1,3 +1,3 @@
 export class Constants {    
-    static API_URL:string = "http://localhost:60256/api/";
+    static API_URL:string = "http://localhost:54000/api/";
 }

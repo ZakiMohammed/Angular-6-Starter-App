@@ -1,4 +1,19 @@
-<!-- Projects Rows -->
+<!-- Product Search -->
+<div class="row">
+  <div class="col-9">
+      <input type="text" placeholder="Search products" class="form-control" [(ngModel)]="pagination.searchText" (input)="pagination.search()">
+  </div>
+  <div class="col-3">
+    <div class="btn-group" role="group">
+        <button class="btn btn-default" type="button" (click)="pagination.order('title')">Title</button>
+        <button class="btn btn-default" type="button" (click)="pagination.order('shortContent')">Short Content</button>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- Product Rows -->
 <div *ngFor="let product of pagination.list; let last = last">
   <div class="row">
     <div class="col-md-7">
@@ -9,14 +24,14 @@
     <div class="col-md-5">
       <h3>{{ product.title }}</h3>
       <p>{{ product.shortContent }}</p>
-      <a class="btn btn-primary" [routerLink]="['/product', product.id]">View Project
+      <a class="btn btn-primary d-none" [routerLink]="['/product', product.id]">View Project
         <span class="glyphicon glyphicon-chevron-right"></span>
       </a>
     </div>
   </div>
   <hr>
 </div>
-<!-- /Projects Row -->
+<!-- /Product Row -->
 
 <!-- Pagination -->
 <ul class="pagination justify-content-center">
