@@ -31,34 +31,85 @@
 <div class="row">
   <div class="col-lg-8 mb-4">
     <h3>Send us a Message</h3>
-    <form name="sentMessage" #contactForm="ngForm" (ngSubmit)="onSubmit()">
-      <div class="control-group form-group">
-        <div class="controls">
-          <label>Full Name:</label>
-          <input type="text" class="form-control" name="name" required [(ngModel)]="contact.name">
-          <p class="help-block"></p>
-        </div>
+    <form novalidate 
+          (ngSubmit)="onSubmit(contactForm)" 
+          #contactForm="ngForm">
+      <div class="form-group">
+        <input type="text" 
+              class="form-control" 
+              placeholder="Full Name"
+              name="name" 
+              required               
+              maxlength="100"
+              [(ngModel)]="contact.name"
+              #nameVar="ngModel"
+              [ngClass]="{ 'is-invalid': (nameVar.touched || nameVar.dirty) && !nameVar.valid }">
+        <span class="invalid-feedback">
+          <span *ngIf="nameVar.errors?.required">
+            This field is required
+          </span>
+        </span>
       </div>
-      <div class="control-group form-group">
-        <div class="controls">
-          <label>Phone Number:</label>
-          <input type="tel" class="form-control" name="phone" required [(ngModel)]="contact.phone">
-        </div>
+      <div class="form-group">
+        <input type="tel"
+              class="form-control"
+              placeholder="Phone Number"
+              name="phone"
+              required
+              minlength="7"
+              maxlength="20"
+              [(ngModel)]="contact.phone"
+              #phoneVar="ngModel"
+              [ngClass]="{ 'is-invalid': (phoneVar.touched || phoneVar.dirty) && !phoneVar.valid }">
+        <span class="invalid-feedback">
+          <span *ngIf="phoneVar.errors?.required">
+            This field is required
+          </span>
+          <span *ngIf="phoneVar.errors?.minlength">
+              At least 7 digit number is required
+          </span>
+        </span>
       </div>
-      <div class="control-group form-group">
-        <div class="controls">
-          <label>Email Address:</label>
-          <input type="email" class="form-control" name="email" required [(ngModel)]="contact.email">
-        </div>
+      <div class="form-group">
+        <input type="email" 
+              class="form-control"
+              placeholder="Email"
+              name="email"
+              required
+              email
+              [(ngModel)]="contact.email"
+              #emailVar="ngModel"
+              [ngClass]="{ 'is-invalid': (emailVar.touched || emailVar.dirty) && !emailVar.valid }">
+        <span class="invalid-feedback">
+          <span *ngIf="emailVar.errors?.required">
+            This field is required
+          </span>
+          <span *ngIf="emailVar.errors?.email">
+              Email is invalid
+          </span>
+        </span>
       </div>
-      <div class="control-group form-group">
-        <div class="controls">
-          <label>Message:</label>
-          <textarea rows="10" cols="100" class="form-control" name="message" required [(ngModel)]="contact.message" maxlength="999"
-            style="resize:none"></textarea>
-        </div>
+      <div class="form-group">
+        <textarea 
+                class="form-control"
+                placeholder="Message"
+                rows="3"                
+                name="message"
+                required
+                [(ngModel)]="contact.message"
+                #messageVar="ngModel"
+                [ngClass]="{ 'is-invalid': (messageVar.touched || messageVar.dirty) && !messageVar.valid }">
+        </textarea>
+        <span class="invalid-feedback">
+          <span *ngIf="messageVar.errors?.required">
+            This field is required
+          </span>
+          <span *ngIf="messageVar.errors?.required">
+              This field is required
+            </span>
+        </span>
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="!contactForm.form.valid || sending">
+      <button type="submit" class="btn btn-primary">
         Send Message
       </button>
       <control-alert [alert]="alert"></control-alert>

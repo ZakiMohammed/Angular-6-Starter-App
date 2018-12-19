@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from "@angular/http";
 import { Contact } from '../../models/app.model';
+import { Constants } from 'src/app/helper/app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class ContactService {
   }
 
   post(contact: Contact): Promise<Contact> {    
-    return this.http.post('http://localhost:60256/api/contact', contact, this.options).toPromise()
+    return this.http.post(Constants.API_URL + 'contact', contact, this.options).toPromise()
       .then(this.extractData)
       .catch(this.handleErrorPromise);
   }
