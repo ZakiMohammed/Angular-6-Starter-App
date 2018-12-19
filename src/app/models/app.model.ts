@@ -40,6 +40,19 @@ export class User {
         this.mobile = mobile;
     }
 }
+export class Customer {
+    constructor(public firstName = '',
+      public lastName = '',
+      public email = '',
+      public sendCatalog = false,
+      public addressType = 'home',
+      public street1?: string,
+      public street2?: string,
+      public city?: string,
+      public state = '',
+      public zip?: string) { }
+  }
+  
 export class PageTop {
     title: string;
     subTitle: string;
@@ -57,40 +70,46 @@ export class BreadCrumb {
     name:string;
 }
 export class Alert {
-    visible:boolean;
-    className:string;
-    message:string;
+    constructor(
+        private visible:boolean, 
+        private className:string, 
+        private message:string
+    ) { }
 
-    constructor(visible:boolean, className:string, message:string){
-        this.visible = visible;
-        this.className = className;
-        this.message = message;
-    }
-
-    show(message:string, className:string) {
+    show(message:string, className:string, fadeOut:boolean = true, fadeOutTime:number = 3000) {
         this.message = message;
         this.className = className;
         this.visible = true;
+
+        if (fadeOut) setTimeout(() => this.visible = false, fadeOutTime);
     }
-    success(message:string) {
+    success(message:string, fadeOut:boolean = true, fadeOutTime:number = 3000) {
         this.message = message;
         this.className = 'alert-success';
         this.visible = true;        
+
+        if (fadeOut) setTimeout(() => this.visible = false, fadeOutTime);
     }
-    error(message:string) {
+    error(message:string, fadeOut:boolean = true, fadeOutTime:number = 3000) {
         this.message = message;
         this.className = 'alert-danger';
         this.visible = true;
+
+        if (fadeOut) setTimeout(() => this.visible = false, fadeOutTime);
     }
-    warning(message:string) {
+    warning(message:string, fadeOut:boolean = true, fadeOutTime:number = 3000) {
         this.message = message;
         this.className = 'alert-warning';
         this.visible = true;
+
+        if (fadeOut) setTimeout(() => this.visible = false, fadeOutTime);
     }
-    info(message:string) {
+    info(message:string, fadeOut:boolean = true, fadeOutTime:number = 3000) {
         this.message = message;
         this.className = 'alert-info';
         this.visible = true;
+
+        if (fadeOut) setTimeout(() => this.visible = false, fadeOutTime);
     }
     progress() {
         this.message = `<i class="fa fa-spinner fa-spin fa-fw"></i> Sending please wait...`;

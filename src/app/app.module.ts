@@ -16,6 +16,9 @@ import { AlertComponent } from './components/partial/alert.component';
 
 import { routing }  from './app.routing';
 import { ProductViewComponent } from './components/product-view/product-view.component';
+import { HeaderComponent } from './components/partial/header/header.component';
+import { FooterComponent } from './components/partial/footer/footer.component';
+import { BannerComponent } from './components/partial/banner/banner.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { ProductViewComponent } from './components/product-view/product-view.com
     LoginComponent,
     RegisterComponent,
     AlertComponent,
-    ProductViewComponent
+    ProductViewComponent,
+    HeaderComponent,
+    FooterComponent,
+    BannerComponent,
   ],
   imports: [
     BrowserModule,
