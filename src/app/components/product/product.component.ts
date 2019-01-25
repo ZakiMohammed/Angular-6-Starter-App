@@ -41,7 +41,7 @@ export class ProductComponent implements OnInit {
     this.pagination.searchCallBack = () => {      
       this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, this.pagination.orderBy, this.pagination.orderDir);
     };
-    this.pagination.orderCallBack = (by) => {            
+    this.pagination.orderCallBack = (by:string) => {            
       this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, by, this.pagination.orderDir);
     };
   }
