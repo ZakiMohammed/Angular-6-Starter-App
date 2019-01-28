@@ -3,13 +3,18 @@ export class Pagination{
     numbersCount: number;
     index:number;
     count: number;
-    totalCount: number;        
+    totalCount: number;  
+    currentPage: number;      
     list:any;    
     searchText:string;
     orderBy:string;
     orderDir:string;
-    nextDots:boolean;
-    prevDots:boolean;
+    nextDotsVisible:boolean;
+    prevDotsVisible:boolean;
+    nextVisible:boolean;
+    prevVisible:boolean;
+    firstVisible:boolean;
+    lastVisible:boolean;
 
     public nextCallBack: { (): void; };
     public previousCallBack: { (): void; };
@@ -19,7 +24,7 @@ export class Pagination{
     public searchCallBack: { (): void; };
     public orderCallBack: { (by): void; };
 
-    constructor(numbers:number[], index:number, count:number, list:any, searchText:string, orderBy:string, orderDir:string, numbersCount: number = 10){
+    constructor(numbers:number[], index:number, count:number, list:any, searchText:string, orderBy:string, orderDir:string, numbersCount: number = 5){
         this.numbers = numbers;
         this.index = index;
         this.count = count;
@@ -28,11 +33,19 @@ export class Pagination{
         this.orderBy = orderBy;
         this.orderDir = orderDir;
         this.numbersCount = numbersCount;
+        this.currentPage = 1;
+        this.nextVisible = false;
+        this.prevVisible = false;
+        this.nextDotsVisible = false;
+        this.prevDotsVisible = false;
+        this.firstVisible = true;
+        this.lastVisible = true;
     }
 
     next(){        
         if(this.index + this.count < this.totalCount){            
             this.index += this.count;
+            this.currentPage++;
             this.nextCallBack();
         }
     }
@@ -40,23 +53,35 @@ export class Pagination{
     previous(){        
         if(this.index - this.count >= 0){            
             this.index -= this.count;
+            this.currentPage--;
             this.previousCallBack();
         }
     }
   
     first(){        
         this.index = 0;
+        this.currentPage = 1;
         this.firstCallBack();
     }
   
     last(){        
         this.index = (Math.ceil(this.totalCount / this.count) * this.count) - this.count;        
+        this.currentPage = Math.ceil(this.totalCount / this.count);
         this.lastCallBack();
     }
   
     current(page:number){
         this.index = this.count * (page - 1);
+        this.currentPage = page;
         this.currentCallBack();    
+    }
+
+    nextDots(){
+        this.adjustNumbers(true);
+    }
+
+    previousDots(){
+        this.adjustNumbers(false, true);
     }
 
     search(){
@@ -70,10 +95,48 @@ export class Pagination{
         this.orderCallBack(by);
     }
 
-    adjustNumbers(total:number){
-        let limit = this.index + (this.numbersCount - (this.index % this.numbersCount));
-        let start = limit + 1;
-        let end = limit + this.numbersCount;
+    adjustNumbers(nextDots:boolean = false, prevDots:boolean = false){
+
+        if (this.totalCount === 0)
+            return;
+
+        let limit = 0;
+        let start = 0;
+        let end = 0;
+        let mod = this.currentPage % this.numbersCount;
+        let lastPage = Math.ceil(this.totalCount / this.count);        
+
+        if (mod > 0) {
+            limit = this.currentPage + (this.numbersCount - mod);
+        }
+        else {
+            let prevPage = this.currentPage - 1;
+            limit = prevPage + (this.numbersCount - (prevPage % this.numbersCount));
+        }
+
+        start = (limit - this.numbersCount) + 1;
+        end = (start + this.numbersCount) - 1;
+
+        if (nextDots) {
+            start = this.numbers[0] + this.numbersCount;
+            end = this.numbers[this.numbers.length - 1] + this.numbersCount;
+        }
+        if (prevDots) {
+            start = this.numbers[0] - this.numbersCount;
+            end = this.numbers[this.numbers.length - 1] - this.numbersCount;
+        }
+
+        if (end > lastPage) {
+            end = lastPage;
+            this.nextDotsVisible = false;
+        }
+        else {
+            this.nextDotsVisible = true;
+        }
+
+        this.prevDotsVisible = start !== 1;
+        this.prevVisible = this.currentPage !== 1;
+        this.nextVisible = this.currentPage !== lastPage;
 
         this.numbers = [];
         for (let i = start; i <= end; i++) {

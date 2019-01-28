@@ -36,41 +36,41 @@
 <!-- Pagination -->
 <ul class="pagination justify-content-center">
 
-  <li class="page-item">
+  <li class="page-item" [hidden]="!pagination.firstVisible">
     <button class="page-link" type="button" aria-label="Previous" (click)="pagination.first()">
       <i class="fa fa-angle-double-left"></i>
     </button>
   </li>
-  <li class="page-item">
+  <li class="page-item" [hidden]="!pagination.prevVisible">
     <button class="page-link" type="button" aria-label="Previous" (click)="pagination.previous()">
       <i class="fa fa-angle-left"></i>
     </button>
   </li>
-  <li class="page-item">
-    <button class="page-link" type="button" aria-label="...">
+  <li class="page-item" [hidden]="!pagination.prevDotsVisible">
+    <button class="page-link" type="button" aria-label="..." (click)="pagination.previousDots()">
       ...
     </button>
   </li>
 
   <ng-container *ngFor="let page of pagination.numbers">  
-    <li class="page-item">    
+    <li class="page-item" [class.active]="pagination.currentPage == page">
       <button type="button" class="page-link" (click)="pagination.current(page)">
         {{ page }}
       </button>
     </li>
   </ng-container>
 
-  <li class="page-item">
-    <button class="page-link" type="button" aria-label="...">
+  <li class="page-item" [hidden]="!pagination.nextDotsVisible">
+    <button class="page-link" type="button" aria-label="..." (click)="pagination.nextDots()">
       ...
     </button>
   </li>
-  <li class="page-item">
+  <li class="page-item" [hidden]="!pagination.nextVisible">
     <button class="page-link" type="button" aria-label="Next" (click)="pagination.next()">
       <i class="fa fa-angle-right"></i>
     </button>
   </li>
-  <li class="page-item">
+  <li class="page-item" [hidden]="!pagination.lastVisible">
     <button class="page-link" type="button" aria-label="Next" (click)="pagination.last()">
       <i class="fa fa-angle-double-right"></i>      
     </button>

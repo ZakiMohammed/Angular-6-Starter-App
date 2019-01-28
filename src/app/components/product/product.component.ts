@@ -53,12 +53,13 @@ export class ProductComponent implements OnInit {
   getProducts(index:number, size:number, search:string = "", orderBy:string = "Title", orderDir:string = "ASC") {
     this.productService.getProducts(index, size, search, orderBy, orderDir).subscribe(dto => {
       this.pagination.list = dto.data;
-      this.pagination.totalCount = dto.totalCount;
+      this.pagination.totalCount = dto.filterCount;
 
-      this.pagination.numbers = [];
-      for (var i = 1; i <= Math.ceil(dto.filterCount / this.pagination.count); i++) {
-        this.pagination.numbers.push(i);
-      }
+      // this.pagination.numbers = [];
+      // for (var i = 1; i <= Math.ceil(dto.filterCount / this.pagination.count); i++) {
+      //   this.pagination.numbers.push(i);
+      // }
+      this.pagination.adjustNumbers();
     });
   }  
 
