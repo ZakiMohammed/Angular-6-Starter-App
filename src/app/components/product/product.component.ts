@@ -21,7 +21,7 @@ export class ProductComponent implements OnInit {
       { name: 'Product', route: '', title: 'Product' }
     ]));
 
-    this.pagination = new Pagination([], 0, 5, [], '', 'Title', 'ASC');
+    this.pagination = new Pagination([], 0, 6, [], '', 'Title', 'ASC');
     
     let callback = () => {
       this.getProducts(this.pagination.index, this.pagination.count, this.pagination.searchText, this.pagination.orderBy, this.pagination.orderDir);

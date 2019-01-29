@@ -117,13 +117,15 @@ export class Pagination{
         start = (limit - this.numbersCount) + 1;
         end = (start + this.numbersCount) - 1;
 
+        console.log(this.numbers)
+
         if (nextDots) {
             start = this.numbers[0] + this.numbersCount;
             end = this.numbers[this.numbers.length - 1] + this.numbersCount;
         }
         if (prevDots) {
             start = this.numbers[0] - this.numbersCount;
-            end = this.numbers[this.numbers.length - 1] - this.numbersCount;
+            end = start + (this.numbersCount - 1);
         }
 
         if (end >= lastPage) {
@@ -137,6 +139,14 @@ export class Pagination{
         this.prevDotsVisible = start !== 1;
         this.prevVisible = this.currentPage !== 1;
         this.nextVisible = this.currentPage !== lastPage;
+
+        console.log({
+            start: start,
+            end: end,
+            lastPage: lastPage,
+            limit: limit,
+            numbersCount: this.numbersCount
+        })
 
         this.numbers = [];
         for (let i = start; i <= end; i++) {
