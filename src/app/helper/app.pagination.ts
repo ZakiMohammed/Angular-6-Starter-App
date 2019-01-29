@@ -126,7 +126,7 @@ export class Pagination{
             end = this.numbers[this.numbers.length - 1] - this.numbersCount;
         }
 
-        if (end > lastPage) {
+        if (end >= lastPage) {
             end = lastPage;
             this.nextDotsVisible = false;
         }
