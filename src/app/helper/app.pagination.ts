@@ -97,8 +97,15 @@ export class Pagination{
 
     adjustNumbers(nextDots:boolean = false, prevDots:boolean = false){
 
-        if (this.totalCount === 0)
+        if (this.totalCount === 0){
+            this.nextVisible = false;
+            this.prevVisible = false;
+            this.nextDotsVisible = false;
+            this.prevDotsVisible = false;
+            this.firstVisible = false;
+            this.lastVisible = false;
             return;
+        }
 
         let limit = 0;
         let start = 0;
